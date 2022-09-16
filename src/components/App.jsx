@@ -15,7 +15,17 @@ export class App extends Component {
     filter: ''
   }
 
+  isDuplicate = ({ name }) => {
+    const { contacts } = this.state
+    const result = contacts.find(contactItem => contactItem.name === name)
+    console.log(result)
+    return result
+  }
+
   addContact = (contactObject) => {
+    if (this.isDuplicate(contactObject)) {
+      return alert(`${contactObject.name} is alredy in contacts`)
+    }
 
     return this.setState(prevState => ({
       contacts: [...prevState.contacts, contactObject],
