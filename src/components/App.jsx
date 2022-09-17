@@ -12,7 +12,7 @@ export class App extends Component {
 
   isDuplicate = ({ name }) => {
     const { contacts } = this.state
-    const result = contacts.find(contactItem => contactItem.name === name)
+    const result = contacts.find(contactItem => contactItem.name.toLowerCase() === name.toLowerCase())
     return result
   }
 
