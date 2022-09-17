@@ -6,19 +6,13 @@ import {Filter} from './Filter/Filter'
 export class App extends Component {
 
   state = {
-    contacts: [
-    {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
-    {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
-    {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
-    {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
-  ],
+    contacts: [],
     filter: ''
   }
 
   isDuplicate = ({ name }) => {
     const { contacts } = this.state
     const result = contacts.find(contactItem => contactItem.name === name)
-    console.log(result)
     return result
   }
 
@@ -39,7 +33,8 @@ export class App extends Component {
   }
 
   deleteContact = (id) => {
-    const newContacts = this.state.contacts.filter(contact => contact.id !== id)
+    const { contacts } = this.state
+    const newContacts = contacts.filter(contact => contact.id !== id)
     return this.setState({
       contacts: newContacts
     })    
@@ -48,16 +43,18 @@ export class App extends Component {
 
   render() {
     const { contacts, filter } = this.state
+    const {addContact, handlerFilterChange, deleteContact} = this
+
     const filtredContacts = contacts.filter(({name}) => name.toLowerCase().includes(filter.toLowerCase()))
     
     return (
     <div>
       <h1>Phonebook</h1>
-      <ContactForm addContact={this.addContact} />
+      <ContactForm addContact={addContact} />
   
       <h2>Contacts</h2>
-      <Filter value={filter} onChange={this.handlerFilterChange} />
-        <ContactList contacts={filtredContacts} handleClick={this.deleteContact} />      
+      <Filter value={filter} onChange={handlerFilterChange} />
+      <ContactList contacts={filtredContacts} handleClick={deleteContact} />      
     </div>
   );
   }
